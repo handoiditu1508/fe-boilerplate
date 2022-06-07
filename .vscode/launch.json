@@ -6,15 +6,21 @@
   "configurations": [
     {
       "command": "npm start",
-      "name": "Run npm start",
+      "name": "run",
       "request": "launch",
       "type": "node-terminal"
     },
     {
       "type": "pwa-msedge",
-      "name": "debug",
+      "name": "debug edge",
       "request": "launch",
       "url": "http://localhost:3000"
+    },
+    {
+      "command": "npm run server",
+      "name": "run server",
+      "request": "launch",
+      "type": "node-terminal"
     }
   ]
 }
