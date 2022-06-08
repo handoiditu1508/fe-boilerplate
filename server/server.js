@@ -12,6 +12,7 @@ const port = 3000;
 const delayMiliseconds = 2000;
 const upload = multer();
 const jwtSecret = "0123456789qwertyuiopasdfghjklzxcvbnm";
+const fileDirectory = "public";
 
 // Add middlewares
 app.use(middlewares);
@@ -39,7 +40,7 @@ app.get("/api/protected-echo", (req, res) => {
 });
 
 app.get("/file/*", (req, res) => {
-  const filePath = path.join(__dirname, "public", req.params[0]);
+  const filePath = path.join(__dirname, fileDirectory, req.params[0]);
   res.sendFile(filePath, err => {
     if (err) {
       res.sendStatus(404);
@@ -48,7 +49,7 @@ app.get("/file/*", (req, res) => {
 });
 
 app.post("/file", upload.single("file"), (req, res) => {
-  const destination = path.join(__dirname, "public", req.body.path);
+  const destination = path.join(__dirname, fileDirectory, req.body.path);
   const fileName = req.body.name;
 
   fs.mkdir(destination, { recursive: true }, (err, createdPath) => {
