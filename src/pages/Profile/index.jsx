@@ -1,11 +1,14 @@
 import React from "react";
-import { selectUserName } from "../../redux/features/authentication/authenticationSlice";
+import { selectCurrentUser } from "../../redux/features/authentication/authenticationSlice";
 import { useSelector } from "react-redux";
 
-export default function Profile(){
-  const userName = useSelector(selectUserName);
+export default function Profile() {
+  const user = useSelector(selectCurrentUser);
 
   return (
-    <p>Hello user {userName}</p>
+    <>
+      <p>Hello user {user.name}</p>
+      <p>Id: {user.id}</p>
+    </>
   );
 }

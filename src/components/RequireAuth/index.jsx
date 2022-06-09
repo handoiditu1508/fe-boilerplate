@@ -1,14 +1,14 @@
 import { Navigate, useLocation } from "react-router-dom";
 
 import React from "react";
-import { selectUserName } from "../../redux/features/authentication/authenticationSlice";
+import { selectCurrentUser } from "../../redux/features/authentication/authenticationSlice";
 import { useSelector } from "react-redux";
 
 export default function RequireAuth({ children }) {
-  const userName = useSelector(selectUserName);
+  const user = useSelector(selectCurrentUser);
   const location = useLocation();
 
-  if (!userName) {
+  if (!user) {
     return <Navigate to="/login" replace={true} state={{redirect: location.pathname + location.search}} />
   }
 

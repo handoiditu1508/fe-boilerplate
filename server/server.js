@@ -39,6 +39,28 @@ app.get("/api/protected-echo", (req, res) => {
   }
 });
 
+app.post("/api/login", (req, res) => {
+  createBearerToken((err, token) => {
+    if (err) {
+      res.status(401).json(err.message);
+    } else {
+      let expirationTime = new Date();
+      expirationTime.setDate(expirationTime.getDate() + 1);
+
+      res.status(200).json({
+        token: token,
+        expirationTime,
+        user: {
+          id: Date.now(),
+          userName: "admin1",
+          email: "admin1@gmail.com",
+          name: req.body.name
+        }
+      })
+    }
+  })
+});
+
 app.get("/file/*", (req, res) => {
   const filePath = path.join(__dirname, fileDirectory, req.params[0]);
   res.sendFile(filePath, err => {
@@ -91,7 +113,7 @@ function createBearerToken(callback) {
   };
 
   jwt.sign(payload, jwtSecret, {
-    algorithm: "ES256",
+    algorithm: "HS256",
     audience: [`http://localhost:${port}`],
     expiresIn: "1d",
     issuer: `http://localhost:${port}`,

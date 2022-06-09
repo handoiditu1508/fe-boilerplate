@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import InvoiceService from "../../../services/InvoiceService";
+import invoiceService from "../../../services/invoiceService";
 
 const initialState = {
   invoices: [],
@@ -41,14 +41,14 @@ export const invoiceSlice = createSlice({
       .addCase(deleteAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      })
+      });
   }
 });
 
 export const getAsync = createAsyncThunk(
   "invoice/getAsync",
   async () => {
-    var invoices = await InvoiceService.getInvoices();
+    var invoices = await invoiceService.getInvoices();
     return invoices;
   }
 );
@@ -56,7 +56,7 @@ export const getAsync = createAsyncThunk(
 export const deleteAsync = createAsyncThunk(
   "invoice/deleteAsync",
   async (id) => {
-    await InvoiceService.deleteInvoice(id);
+    await invoiceService.deleteInvoice(id);
     return id;
   }
 );
